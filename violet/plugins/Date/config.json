@@ -1,0 +1,14 @@
+{
+    "name": "Date Plugin",
+    "enabled": true,
+    "hidden": false,
+    "info": {
+        "version": "1.0",
+        "description": "Format dates using data for internationalization from the Unicode CLDR Project (http://cldr.unicode.org)\nCopyright © 1991-2020 Unicode, Inc. All rights reserved.\n\n{{Date|YYYY-MM-DD@locale}}\n{{Date|published@locale}} – to display the page’s published date",
+        "author": "violetCMS",
+        "email": "",
+        "homepage": "https://github.com/maxgrafik/violetCMS",
+        "license": "MIT"
+    },
+    "config": []
+}

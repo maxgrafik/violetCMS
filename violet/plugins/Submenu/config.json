@@ -1,0 +1,20 @@
+{
+    "name": "Submenu Plugin",
+    "enabled": true,
+    "hidden": false,
+    "info": {
+        "version": "1.0",
+        "description": "This plugin allows you to display a detached submenu, e.g. for sidebars.\n{{Submenu}} - Creates a link list of all child pages\n{{Submenu|route}} - Creates a link list of all child pages for route",
+        "author": "violetCMS",
+        "email": "",
+        "homepage": "https://github.com/maxgrafik/violetCMS",
+        "license": "MIT"
+    },
+    "config": [
+        {
+            "label": "Hide invisible pages",
+            "type": "boolean",
+            "value": true
+        }
+    ]
+}

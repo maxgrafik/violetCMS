@@ -1,0 +1,28 @@
+<header>
+    <button type="button" class="close" data-bind="click: close">&times;</button>
+    <h3 data-bind="i18n: 'BtnAddPage'"></h3>
+</header>
+<form data-bind="submit: submit">
+    <!-- ko with: selectedItem -->
+    <label class="aside" data-bind="i18n: 'LabelPageTitle'">
+        <input type="text" data-bind="attr: {placeholder: i18n('LabelPageTitle')}, textInput: title" required>
+    </label>
+    <label class="aside" data-bind="i18n: 'LabelPageSlug'">
+        <input type="text" data-bind="attr: {placeholder: i18n('LabelPageSlug')}, textInput: slug" required>
+    </label>
+    <fieldset>
+        <legend class="aside" data-bind="i18n: 'LabelPageTemplate'"></legend>
+        <label class="dropdown">
+            <button type="button" data-bind="menu: { options: $parents[1].TemplateSelect, value: template }"></button>
+        </label>
+    </fieldset>
+    <footer>
+        <div class="row">
+            <div class="col-70"></div>
+            <div class="col-30">
+                <button type="submit" class="block themed" data-bind="i18n: 'BtnOK'"></button>
+            </div>
+        </div>
+    </footer>
+    <!-- /ko -->
+</form>

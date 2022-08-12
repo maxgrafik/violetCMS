@@ -1,0 +1,25 @@
+<header>
+    <button type="button" class="close" data-bind="click: close">&times;</button>
+    <h3 data-bind="i18n: 'BtnAddUser'"></h3>
+</header>
+<form data-bind="submit: submit">
+    <!-- ko with: selectedItem -->
+    <label class="aside" data-bind="i18n: 'LabelUserName'">
+        <input type="text" data-bind="attr: {placeholder: i18n('LabelUserName')}, value: name" required>
+    </label>
+    <label class="aside" data-bind="i18n: 'LabelUserEmail'">
+        <input type="text" data-bind="attr: {placeholder: i18n('LabelUserEmail')}, value: email" required>
+    </label>
+    <label class="aside" data-bind="i18n: 'LabelUserPassword'">
+        <input type="text" data-bind="attr: {placeholder: i18n('LabelUserPassword')}, value: password" required>
+    </label>
+    <footer>
+        <div class="row">
+            <div class="col-70"></div>
+            <div class="col-30">
+                <button type="submit" class="block themed" data-bind="i18n: 'BtnOK'"></button>
+            </div>
+        </div>
+    </footer>
+    <!-- /ko -->
+</form>

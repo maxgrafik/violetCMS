@@ -1,0 +1,33 @@
+<header>
+    <h1 data-bind="i18n: 'HeadPlugins'"></h1>
+    <div class="toolbar">
+        <label class="button themed fileselect" data-bind="i18n: 'BtnInstallPlugin'">
+            <input type="file" data-bind="fileSelect: install" accept="application/zip, .zip">
+        </label>
+    </div>
+</header>
+
+<div class="tabcontent">
+
+    <!-- ko if: showUpload -->
+    <div class="progress">
+        <div class="progress-value" data-bind="style: { width: showUploadProgress() + '%' }"></div>
+    </div>
+    <!-- /ko -->
+
+    <section id="plugins" role="tabpanel" class="tabpanel active">
+
+        <ul data-bind="foreach: Plugins">
+            <li>
+                <a data-bind="text: name(), attr: { href: '#!/plugin/' + name() }, css: { disabled: !enabled() }"></a>
+                <span data-bind="text: version"></span>
+                <button class="icon-info" data-bind="click: showInfo, attr: { title: i18n('BtnShowInfo') }"></button>
+                <div class="info" data-bind="css: { collapsed: collapsed }">
+                    <p data-bind="text: description"></p>
+                </div>
+            </li>
+        </ul>
+
+    </section>
+
+</div>

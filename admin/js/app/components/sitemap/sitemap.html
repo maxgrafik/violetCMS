@@ -1,0 +1,34 @@
+<header>
+    <h1 data-bind="i18n: 'HeadSitemap'"></h1>
+    <div class="toolbar">
+        <button class="themed" data-bind="click: addPage, i18n: 'BtnAddPage'"></button>
+    </div>
+</header>
+
+<div class="tabcontent">
+
+    <section id="sitemap" role="tabpanel" class="tabpanel active">
+
+        <ul data-bind="sortable: {foreach: Sitemap, name: 'sitemapTemplate', options: { onEnd: $component.movePage }}"></ul>
+
+        <script id="sitemapTemplate" type="text/html">
+            <li>
+                <span data-bind="class: $component.PageIcon($data)"></span>
+                <a data-bind="text: title, attr: { href: '#!/page' + url() }"></a>
+                <span data-bind="text: url"></span>
+                <button class="icon-delete" data-bind="click: $component.getConfirmDelete.bind($component), attr: { title: i18n('BtnDeletePage') }"></button>
+                <ul data-bind="sortable: {foreach: children, name: 'sitemapTemplate', options: { onEnd: $component.movePage }}"></ul>
+            </li>
+        </script>
+
+    </section>
+
+</div>
+
+<dialog class="fullscreen" role="dialog" data-bind="modal: newPage" hidden>
+    <!-- ko component: { name: "newPage", params: { data: newPage, onChange: Slugify, onSubmit: createPage.bind($component) } } --><!-- /ko -->
+</dialog>
+
+<dialog role="dialog" data-bind="modal: confirmDelete" hidden>
+    <!-- ko component: { name: "deletePage", params: { data: confirmDelete, onSubmit: deletePage.bind($component) } } --><!-- /ko -->
+</dialog>

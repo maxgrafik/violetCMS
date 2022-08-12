@@ -1,0 +1,29 @@
+<link href="css/codemirror.css" rel="stylesheet">
+<div class="toolbar">
+    <button class="icon-heading" data-bind="attr: {title: i18n('BtnEditHeading')}, css: {active: isActive('header')}, click: toggleHeader"></button>
+    <button class="icon-bold" data-bind="attr: {title: i18n('BtnEditBold')}, css: {active: isActive('strong')}, click: toggleBold"></button>
+    <button class="icon-italic" data-bind="attr: {title: i18n('BtnEditItalic')}, css: {active: isActive('em')}, click: toggleItalic"></button>
+    <hr>
+    <button class="icon-quote" data-bind="attr: {title: i18n('BtnEditQuote')}, css: {active: isActive('quote')}, click: toggleQuote"></button>
+    <button class="icon-list-unordered" data-bind="attr: {title: i18n('BtnEditListUL')}, css: {active: isActive('unordered-list')}, click: toggleUnorderedList"></button>
+    <button class="icon-list-ordered" data-bind="attr: {title: i18n('BtnEditListOL')}, css: {active: isActive('ordered-list')}, click: toggleOrderedList"></button>
+    <hr>
+    <button class="icon-link" data-bind="attr: {title: i18n('BtnCreateLink')}, css: {active: isActive('link')}, click: createLink"></button>
+    <button class="icon-image" data-bind="attr: {title: i18n('BtnInsertImage')}, css: {active: isActive('image')}, click: insertImage"></button>
+    <hr>
+    <label class="dropdown">
+        <button class="icon-plugin" data-bind="attr: {title: 'Plugins'}, menu: { options: PluginSelect, value: insertPlugin }"></button>
+    </label>
+    <button class="icon-help" data-bind="attr: {title: 'Markdown Guide'}, click: markdownGuide"></button>
+</div>
+<div data-bind="css: { showTrailingSpace: showTrailingSpace }">
+    <textarea id="editor"></textarea>
+</div>
+
+<dialog class="fullscreen" role="dialog" data-bind="modal: newLink" hidden>
+    <!-- ko component: { name: "editLink", params: { data: newLink, onChange: resetDialog, onSubmit: submitDialog.bind($component) } } --><!-- /ko -->
+</dialog>
+
+<dialog class="fullscreen" role="dialog" data-bind="modal: newImage" hidden>
+    <!-- ko component: { name: "editImage", params: { data: newImage, onChange: resetDialog, onSubmit: submitDialog.bind($component) } } --><!-- /ko -->
+</dialog>

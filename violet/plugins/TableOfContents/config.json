@@ -1,0 +1,25 @@
+{
+    "name": "Table of contents Plugin",
+    "enabled": true,
+    "hidden": false,
+    "info": {
+        "version": "1.0",
+        "description": "This plugin lists all child pages with their title, an introductory text or summary (if given as comment {# ... #}) and a 'read more' link to each child page.",
+        "author": "violetCMS",
+        "email": "",
+        "homepage": "https://github.com/maxgrafik/violetCMS",
+        "license": "MIT"
+    },
+    "config": [
+        {
+            "label": "Hide invisible pages",
+            "type": "boolean",
+            "value": true
+        },
+        {
+            "label": "Link text",
+            "type": "string",
+            "value": "Read more …"
+        }
+    ]
+}

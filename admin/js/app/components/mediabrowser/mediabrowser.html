@@ -1,0 +1,36 @@
+<div class="mediabrowser">
+
+    <!-- ko with: BackButton -->
+    <figure class="media" data-bind="event: { dblclick: $component.handleClick }">
+        <div>
+            <img class="directory backbutton" src="img/icon-back.svg">
+        </div>
+        <figcaption data-bind="text: $data.name"></figcaption>
+    </figure>
+    <!-- /ko -->
+
+    <!-- ko foreach: MediaFilesFiltered -->
+
+    <!-- ko if: $data.type() === 'directory' -->
+    <figure class="media" data-bind="event: { dblclick: $component.handleClick }">
+        <div>
+            <img class="directory" data-bind="attr: { src: $component.MediaIcon($data) }">
+        </div>
+        <figcaption data-bind="text: $data.name"></figcaption>
+    </figure>
+    <!-- /ko-->
+
+    <!-- ko ifnot: $data.type() === 'directory' -->
+    <figure class="media" data-bind="css: { selected: $data === $component.selected() },
+                                     click: $component.handleClick,
+                                     event: { dblclick: $component.onSubmit }">
+        <div>
+            <img data-bind="attr: { src: $component.MediaIcon($data) }">
+        </div>
+        <figcaption data-bind="text: $data.name"></figcaption>
+    </figure>
+    <!-- /ko-->
+
+    <!-- /ko -->
+
+</div>

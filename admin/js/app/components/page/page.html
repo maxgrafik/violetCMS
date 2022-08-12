@@ -1,0 +1,110 @@
+<header>
+    <!-- ko ifnot: LastError -->
+    <h1 data-bind="i18n: 'HeadPage'"></h1>
+    <div class="toolbar">
+        <!-- ko ifnot: showPreview -->
+        <button class="themed icon-preview" data-bind="click: preview, i18n: 'BtnPreview'"></button>
+        <button class="themed" data-bind="click: save, i18n: 'BtnSaveChanges'"></button>
+        <!-- /ko -->
+        <!-- ko if: showPreview -->
+        <button class="themed" data-bind="click: preview, i18n: 'BtnClosePreview'"></button>
+        <!-- /ko -->
+    </div>
+    <!-- /ko -->
+</header>
+
+<div class="tabcontent">
+
+    <!-- ko if: LastError -->
+    <h2 class="empty-state" data-bind="text: LastError"></h2>
+    <!-- /ko -->
+
+    <!-- ko ifnot: LastError -->
+
+    <ul class="tablist" role="tablist" data-bind="navTabs: navTabs"></ul>
+
+    <section id="pageContent" role="tabpanel" class="tabpanel">
+        <div class="row">
+            <div class="form-group col-75">
+                <label data-bind="i18n: 'LabelPageTitle'">
+                    <input type="text" data-bind="attr: {placeholder: i18n('LabelPageTitle')}, textInput: Page.title">
+                </label>
+            </div>
+            <div class="form-group col-25">
+                <label class="dropdown" data-bind="i18n: 'LabelPageTemplate'">
+                    <button data-bind="menu: { options: TemplateSelect, value: Page.template }"></button>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-75" data-bind="css: { 'col-75': showPageSections }">
+                <editor params="proxy: Editor, config: $root.Config"></editor>
+            </div>
+            <!-- ko if: showPageSections -->
+            <div class="col-25">
+                <ul class="pagesections" data-bind="foreach: PageSections">
+                    <li data-bind="css: {'selected': selected}, click: select">
+                        <span data-bind="text: displayName"></span>
+                    </li>
+                </ul>
+            </div>
+            <!-- /ko -->
+        </div>
+    </section>
+
+    <section id="pageMeta" role="tabpanel" class="tabpanel">
+        <h2 data-bind="i18n: 'SectionMetaData'"></h2>
+        <label class="aside" data-bind="i18n: 'LabelMetaDescription'">
+            <input type="text" data-bind="attr: {placeholder: i18n('LabelMetaDescription')}, value: Page.description">
+        </label>
+        <label class="aside" data-bind="i18n: 'LabelMetaKeywords'">
+            <input type="text" data-bind="attr: {placeholder: i18n('LabelMetaKeywords')}, value: Page.keywords">
+        </label>
+        <label class="aside" data-bind="i18n: 'LabelMetaCanonicalURL'">
+            <input type="text" data-bind="attr: {placeholder: i18n('LabelMetaCanonicalURL')}, value: Page.canonicalURL">
+        </label>
+        <label class="aside" data-bind="i18n: 'LabelMetaRedirectURL'">
+            <input type="text" data-bind="attr: {placeholder: i18n('LabelMetaRedirectURL')}, value: Page.redirectURL">
+        </label>
+        <fieldset>
+            <legend class="aside" data-bind="i18n: 'LabelMetaRobots'"></legend>
+            <div>
+                <input type="checkbox" data-bind="checked: robotsIndex"> <span>index</span>
+                <input type="checkbox" data-bind="checked: robotsFollow"> <span>follow</span>
+            </div>
+        </fieldset>
+    </section>
+
+    <section id="pageOptions" role="tabpanel" class="tabpanel">
+        <h2 data-bind="i18n: 'SectionPublishing'"></h2>
+        <fieldset class="form-group">
+            <legend class="aside" data-bind="i18n: 'LabelPageStatus'"></legend>
+            <div>
+                <input type="checkbox" data-bind="checked: Page.published"> <span data-bind="i18n: 'OptPagePublished'"></span>
+                <input type="checkbox" data-bind="checked: Page.visible"> <span data-bind="i18n: 'OptPageVisible'"></span>
+            </div>
+        </fieldset>
+        <label class="aside" data-bind="i18n: 'LabelPageDate'">
+            <input class="icon-date col-40" type="text" data-bind="attr: {placeholder: i18n('LabelPageDate')}, datepicker: Page.date" readonly>
+        </label>
+        <label class="aside" data-bind="i18n: 'LabelPageDatePub'">
+            <input class="icon-date col-40" type="text" data-bind="attr: {placeholder: i18n('LabelPageDatePub')}, datepicker: Page.publishDate" readonly>
+        </label>
+        <label class="aside" data-bind="i18n: 'LabelPageDateUnpub'">
+            <input class="icon-date col-40" type="text" data-bind="attr: {placeholder: i18n('LabelPageDateUnpub')}, datepicker: Page.unpublishDate" readonly>
+        </label>
+    </section>
+
+    <!-- /ko -->
+
+</div>
+
+<!-- ko if: showPreview -->
+<div id="preview">
+    <iframe data-bind="attr: { src: RootURL() + PageURL + '?draft' }"></iframe>
+</div>
+<!-- /ko -->
+
+<dialog role="dialog" data-bind="modal: confirmClose" hidden>
+    <!-- ko component: { name: "confirmClose", params: { data: confirmClose, onSubmit: handleClose.bind($component) } } --><!-- /ko -->
+</dialog>

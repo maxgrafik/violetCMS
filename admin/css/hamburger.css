@@ -1,0 +1,112 @@
+/*!
+ * Hamburgers
+ * @description Tasty CSS-animated hamburgers
+ * @author Jonathan Suh @jonsuh
+ * @site https://jonsuh.com/hamburgers
+ * @link https://github.com/jonsuh/hamburgers
+ */.hamburger {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    cursor: pointer;
+    transition-property: opacity, filter;
+    transition-duration: .15s;
+    transition-timing-function: linear;
+    font: inherit;
+    color: inherit;
+    text-transform: none;
+    background-color: transparent !important;
+    border: none !important;
+    overflow: visible;
+    outline:0 !important;
+    box-shadow: none !important;
+}
+
+.hamburger:hover {
+    _opacity:.7
+}
+
+.hamburger.is-active:hover {
+    _opacity:.7
+}
+
+.hamburger.is-active .hamburger-inner, .hamburger.is-active .hamburger-inner::after, .hamburger.is-active .hamburger-inner::before {
+    _background-color:#fff
+}
+
+.hamburger-box {
+    width: 30px;
+    height: 24px;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    position:relative
+}
+
+.hamburger-inner {
+    display: block;
+    top: 50%;
+    margin-top:-2px
+}
+
+.hamburger-inner, .hamburger-inner::after, .hamburger-inner::before {
+    width: 30px;
+    height: 4px;
+    background-color: #fff;
+    border-radius: 4px;
+    position: absolute;
+    transition-property: transform;
+    transition-duration: .15s;
+    transition-timing-function:ease
+}
+
+.hamburger-inner::after, .hamburger-inner::before {
+    content: "";
+    display:block
+}
+
+.hamburger-inner::before {
+    top:-10px
+}
+
+.hamburger-inner::after {
+    bottom:-10px
+}
+
+.hamburger .hamburger-inner {
+    transition-duration: .22s;
+    transition-timing-function:cubic-bezier(.55, .055, .675, .19)
+}
+
+.hamburger .hamburger-inner::before {
+    transition:top .1s .25s ease-in, opacity .1s ease-in
+}
+
+.hamburger .hamburger-inner::after {
+    transition:bottom .1s .25s ease-in, transform .22s cubic-bezier(.55, .055, .675, .19)
+}
+
+.hamburger.is-active .hamburger-inner {
+    transform: rotate(-225deg);
+    transition-delay: .12s;
+    transition-timing-function:cubic-bezier(.215, .61, .355, 1)
+}
+
+.hamburger.is-active .hamburger-inner::before {
+    top: 0;
+    opacity: 0;
+    transition:top .1s ease-out, opacity .1s .12s ease-out
+}
+
+.hamburger.is-active .hamburger-inner::after {
+    bottom: 0;
+    transform: rotate(90deg);
+    transition: bottom .1s ease-out, transform .22s .12s cubic-bezier(.215, .61, .355, 1)
+}
+
+

@@ -1,0 +1,54 @@
+<header>
+    <button type="button" class="close" data-bind="click: close">&times;</button>
+    <h3 data-bind="i18n: 'BtnCreateLink'"></h3>
+</header>
+<form data-bind="submit: submit">
+    <!-- ko with: selectedItem -->
+    <fieldset>
+        <legend class="aside" data-bind="i18n: 'LabelLinkType'"></legend>
+        <label class="dropdown">
+            <button type="button" data-bind="menu: { options: $parents[1].LinkTypeSelect, value: type }"></button>
+        </label>
+    </fieldset>
+    <label class="aside" data-bind="i18n: 'LabelLinkText'">
+        <input type="text" data-bind="attr: {placeholder: i18n('LabelLinkText')}, value: text">
+    </label>
+    <!-- ko if: type() === "URL" -->
+    <label class="aside" data-bind="i18n: 'LabelLinkURL'">
+        <input type="text" data-bind="attr: {placeholder: i18n('LabelLinkURL')}, value: url">
+    </label>
+    <label class="aside" data-bind="i18n: 'LabelLinkTitle'">
+        <input type="text" data-bind="attr: {placeholder: i18n('LabelLinkTitle')}, value: title">
+    </label>
+    <!-- /ko -->
+    <!-- ko if: type() === "email" -->
+    <label class="aside" data-bind="i18n: 'LabelLinkEmail'">
+        <input type="text" data-bind="attr: {placeholder: i18n('LabelLinkEmail')}, value: url">
+    </label>
+    <!-- /ko -->
+    <!-- ko if: type() === "phone" -->
+    <label class="aside" data-bind="i18n: 'LabelLinkPhone'">
+        <input type="text" data-bind="attr: {placeholder: i18n('LabelLinkPhone')}, value: url">
+    </label>
+    <!-- /ko -->
+    <!-- ko if: type() === "page" -->
+    <fieldset>
+        <legend class="aside" data-bind="i18n: 'LabelLinkPage'"></legend>
+        <label class="dropdown">
+            <button type="button" data-bind="menu: { options: $parents[1].PageSelect, value: route }"></button>
+        </label>
+    </fieldset>
+    <!-- /ko -->
+    <!-- ko if: type() === "media" -->
+    <mediabrowser params="url: url, imgOnly: false, onSubmit: $component.submit.bind($component)"></mediabrowser>
+    <!-- /ko -->
+    <footer>
+        <div class="row">
+            <div class="col-70"></div>
+            <div class="col-30">
+                <button type="submit" class="block themed" data-bind="i18n: 'BtnOK'"></button>
+            </div>
+        </div>
+    </footer>
+    <!-- /ko -->
+</form>

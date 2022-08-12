@@ -1,0 +1,78 @@
+<header>
+    <h1 data-bind="i18n: 'HeadPlugin'"></h1>
+    <div class="toolbar">
+        <button class="themed" data-bind="click: saveConfig, i18n: 'BtnSaveChanges'"></button>
+    </div>
+</header>
+
+<div class="tabcontent">
+
+    <section id="plugin" role="tabpanel" class="tabpanel active">
+        <div class="row">
+            <div class="col-60">
+                <h2 class="form-group">
+                    <span data-bind="text: Plugin.name"></span>
+                    <span data-bind="text: Plugin.info.version"></span>
+                </h2>
+                <div class="form-group">
+                    <label class="aside" data-bind="i18n: 'LabelPluginEnabled'">
+                        <input type="checkbox" class="switch" data-bind="checked: Plugin.enabled">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <p class="label aside" data-bind="i18n: 'LabelPluginDescription'">
+                        <span class="pre" data-bind="text: Plugin.info.description"></span>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <p class="label aside" data-bind="i18n: 'LabelPluginAuthor'">
+                        <!-- ko if: Plugin.info.email -->
+                        <span><a data-bind="attr: { href: 'mailto:' + Plugin.info.email() }, text: Plugin.info.author"></a></span>
+                        <!-- /ko -->
+                        <!-- ko ifnot: Plugin.info.email -->
+                        <span class="pre" data-bind="text: Plugin.info.author"></span>
+                        <!-- /ko -->
+                    </p>
+                    <p class="label aside" data-bind="i18n: 'LabelPluginHomepage'">
+                        <span><a data-bind="attr: { href: Plugin.info.homepage }, text: Plugin.info.homepage" target="_blank"></a></span>
+                    </p>
+                    <p class="label aside" data-bind="i18n: 'LabelPluginLicense'">
+                        <span data-bind="text: Plugin.info.license"></span>
+                    </p>
+                </div>
+            </div>
+            <!-- ko if: Plugin.config().length > 0 -->
+            <div class="col-5"></div>
+            <div class="col-33 plugin-config">
+                <h2 data-bind="i18n: 'LabelPluginSettings'"></h2>
+                <fieldset>
+                    <!-- ko foreach: Plugin.config -->
+                    <div class="form-group">
+                        <!-- ko if: type() === 'boolean' -->
+                        <input type="checkbox" data-bind="checked: value"> <span data-bind="i18n: label()"></span>
+                        <!-- /ko -->
+                        <!-- ko if: type() === 'string' -->
+                        <label class="aside2" data-bind="i18n: label()">
+                            <input type="text" data-bind="value: value">
+                        </label>
+                        <!-- /ko -->
+                        <!-- ko if: type() === 'page' -->
+                        <label class="aside2 dropdown" data-bind="i18n: label()">
+                            <button data-bind="menu: { options: $parent.PageSelect, value: value }"></button>
+                        </label>
+                        <!-- /ko -->
+                    </div>
+                    <!-- /ko -->
+                </fieldset>
+            </div>
+            <!-- /ko -->
+        </div>
+    </section>
+
+    <button class="danger" style="float: right" data-bind="click: getConfirmDelete, i18n: 'BtnUninstallPlugin'"></button>
+
+</div>
+
+<dialog role="dialog" data-bind="modal: confirmDelete" hidden>
+    <!-- ko component: { name: "deletePlugin", params: { data: confirmDelete, onSubmit: deletePlugin.bind($component) } } --><!-- /ko -->
+</dialog>

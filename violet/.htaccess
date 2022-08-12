@@ -1,0 +1,32 @@
+# ######################################################################
+# # SECURITY                                                           #
+# ######################################################################
+
+# ----------------------------------------------------------------------
+# | Allow Bearer Token                                                 |
+# ----------------------------------------------------------------------
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
+# ----------------------------------------------------------------------
+# | Block access to all files except 'api.php' and 'download.php'      |
+# ----------------------------------------------------------------------
+
+# Apache 2.2
+
+#Order Allow,Deny
+#Deny from all
+#
+#<FilesMatch "^(api|download)\.php$">
+#    Order Deny,Allow
+#    Allow from all
+#</FilesMatch>
+
+
+# Apache 2.4
+
+<IfModule mod_authz_core.c>
+    <FilesMatch "^(?!(api|download)\.php$).+">
+        Require all denied
+    </FilesMatch>
+</IfModule>

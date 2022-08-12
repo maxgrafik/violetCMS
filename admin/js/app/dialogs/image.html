@@ -1,0 +1,36 @@
+<header>
+    <button type="button" class="close" data-bind="click: close">&times;</button>
+    <h3 data-bind="i18n: 'BtnInsertImage'"></h3>
+</header>
+<form data-bind="submit: submit">
+    <!-- ko with: selectedItem -->
+    <fieldset>
+        <legend class="aside" data-bind="i18n: 'LabelImageSource'"></legend>
+        <label class="dropdown">
+            <button type="button" data-bind="menu: { options: $parents[1].ImageSourceSelect, value: type }"></button>
+        </label>
+    </fieldset>
+    <!-- ko if: type() === "srcMedia" -->
+    <mediabrowser params="url: url, imgOnly: true, onSubmit: $component.submit.bind($component)"></mediabrowser>
+    <!-- /ko -->
+    <!-- ko if: type() === "srcURL" -->
+    <label class="aside" data-bind="i18n: 'LabelLinkURL'">
+        <input type="text" data-bind="attr: {placeholder: i18n('LabelLinkURL')}, value: url">
+    </label>
+    <label class="aside" data-bind="i18n: 'LabelImageAltText'">
+        <input type="text" data-bind="attr: {placeholder: i18n('LabelImageAltText')}, value: text">
+    </label>
+    <label class="aside" data-bind="i18n: 'LabelLinkTitle'">
+        <input type="text" data-bind="attr: {placeholder: i18n('LabelLinkTitle')}, value: title">
+    </label>
+    <!-- /ko -->
+    <footer>
+        <div class="row">
+            <div class="col-70"></div>
+            <div class="col-30">
+                <button type="submit" class="block themed" data-bind="i18n: 'BtnOK'"></button>
+            </div>
+        </div>
+    </footer>
+    <!-- /ko -->
+</form>

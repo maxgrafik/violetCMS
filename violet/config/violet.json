@@ -1,0 +1,25 @@
+{
+    "Website": {
+        "Title": "violetCMS",
+        "Description": "yet another flat file CMS",
+        "Keywords": "",
+        "Meta": [
+            {
+                "name": "",
+                "content": ""
+            }
+        ]
+    },
+    "Routes": {
+        "Home": "/welcome",
+        "HideInURL": true,
+        "Redirect404": "/error"
+    },
+    "Theme": "violet",
+    "Maintainance": false,
+    "Markdown": {
+        "AutoLineBreak": true,
+        "AutoURLLinks": true,
+        "EscapeHTML": true
+    }
+}

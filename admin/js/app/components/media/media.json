@@ -1,0 +1,23 @@
+{
+    "audio/mpeg"      : "img/mime-types/icon-audio.svg",
+    "audio/x-m4a"     : "img/mime-types/icon-audio.svg",
+    "application/rtf" : "img/mime-types/icon-rtf.svg",
+    "application/pdf" : "img/mime-types/icon-pdf.svg",
+    "image/jpeg"      : "img/mime-types/icon-image.svg",
+    "image/png"       : "img/mime-types/icon-image.svg",
+    "image/gif"       : "img/mime-types/icon-image.svg",
+    "image/tiff"      : "img/mime-types/icon-image.svg",
+    "image/x-ms-bmp"  : "img/mime-types/icon-image.svg",
+    "image/svg"       : "img/mime-types/icon-image.svg",
+    "image/svg+xml"   : "img/mime-types/icon-image.svg",
+    "text/css"        : "img/mime-types/icon-text.svg",
+    "text/html"       : "img/mime-types/icon-text.svg",
+    "text/javascript" : "img/mime-types/icon-text.svg",
+    "text/plain"      : "img/mime-types/icon-text.svg",
+    "text/rtf"        : "img/mime-types/icon-rtf.svg",
+    "video/mpeg"      : "img/mime-types/icon-video.svg",
+    "video/mp4"       : "img/mime-types/icon-video.svg",
+    "video/quicktime" : "img/mime-types/icon-video.svg",
+    "directory"       : "img/mime-types/icon-folder.svg",
+    "generic"         : "img/mime-types/icon-generic.svg"
+}

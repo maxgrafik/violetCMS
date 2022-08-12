@@ -1,0 +1,14 @@
+{
+    "name": "Meta Plugin",
+    "enabled": true,
+    "hidden": true,
+    "info": {
+        "version": "1.0",
+        "description": "This plugin is used to set the meta tags in templates. Possible values are:\n{{Meta|Title}}\n{{Meta|Description}}\n{{Meta|Keywords}}\n{{Meta|Robots}}\n{{Meta|Properties}} – e.g. Open Graph Tags\n{{Meta|CanonicalURL}}\n{{Meta|ThemeURL}} – route to the currently used theme\n{{Meta|RootURL}} – route to the home page",
+        "author": "violetCMS",
+        "email": "",
+        "homepage": "https://github.com/maxgrafik/violetCMS",
+        "license": "MIT"
+    },
+    "config": []
+}

@@ -1,0 +1,16 @@
+<form>
+    <!-- ko with: selectedItem -->
+    <p data-bind="i18n: 'ConfirmDeleteUser', i18nObj: {name: name()}"></p>
+    <!-- /ko -->
+    <footer>
+        <div class="row">
+            <div class="col-40"></div>
+            <div class="col-30">
+                <button class="block" data-bind="i18n: 'BtnCancel', click: close"></button>
+            </div>
+            <div class="col-30">
+                <button class="block danger" data-bind="i18n: 'BtnDelete', click: submit"></button>
+            </div>
+        </div>
+    </footer>
+</form>

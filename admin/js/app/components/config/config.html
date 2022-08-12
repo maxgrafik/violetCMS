@@ -1,0 +1,93 @@
+<header>
+    <h1 data-bind="i18n: 'HeadConfig'"></h1>
+</header>
+
+<div class="tabcontent">
+
+    <ul class="tablist" role="tablist" data-bind="navTabs: navTabs"></ul>
+
+    <section id="website" role="tabpanel" class="tabpanel">
+        <h2 data-bind="i18n: 'SectionMetaData'"></h2>
+        <label class="aside" data-bind="i18n: 'LabelSiteTitle'">
+            <input type="text" data-bind="attr: {placeholder: i18n('LabelSiteTitle')}, value: $root.Config.Website.Title">
+        </label>
+        <label class="aside" data-bind="i18n: 'LabelSiteDescription'">
+            <input type="text" data-bind="attr: {placeholder: i18n('LabelSiteDescription')}, value: $root.Config.Website.Description">
+        </label>
+        <label class="aside" data-bind="i18n: 'LabelSiteKeywords'">
+            <input type="text" data-bind="attr: {placeholder: i18n('LabelSiteKeywords')}, value: $root.Config.Website.Keywords">
+        </label>
+        <fieldset>
+            <legend class="aside" data-bind="i18n: 'LabelSiteMeta'"></legend>
+            <!-- ko foreach: $root.Config.Website.Meta -->
+            <div class="row">
+                <input type="text" class="col-33" data-bind="attr: {placeholder: i18n('LabelSiteMetaProperty')}, value: name">
+                <input type="text" class="col-55" data-bind="attr: {placeholder: i18n('LabelSiteMetaContent')}, value: content">
+                <button class="btn-plus" data-bind="click: $component.addMetaTag"></button>
+                <button class="btn-minus" data-bind="click: $component.removeMetaTag"></button>
+            </div>
+            <!-- /ko -->
+        </fieldset>
+    </section>
+
+    <section id="settings" role="tabpanel" class="tabpanel">
+        <div class="row">
+            <div class="col-60">
+                <h2 data-bind="i18n: 'SectionAppearance'"></h2>
+                <fieldset class="form-group">
+                    <legend class="aside col-30" data-bind="i18n: 'LabelSiteTheme'"></legend>
+                    <label class="dropdown col-60">
+                        <button data-bind="menu: { options: ThemeSelect, value: $root.Config.Theme }"></button>
+                    </label>
+                </fieldset>
+
+                <h2 data-bind="i18n: 'SectionRoutes'"></h2>
+                <fieldset class="form-group">
+                    <legend class="aside col-30" data-bind="i18n: 'LabelSiteHome'"></legend>
+                    <label class="dropdown col-60">
+                        <button data-bind="menu: { options: RouteSelect(false), value: $root.Config.Routes.Home }"></button>
+                    </label>
+                    <label class="col-60">
+                        <input type="checkbox" data-bind="checked: $root.Config.Routes.HideInURL"> <span data-bind="i18n: 'OptHideHomeRoute'"></span>
+                    </label>
+                </fieldset>
+                <fieldset class="form-group">
+                    <legend class="aside col-30" data-bind="i18n: 'LabelPageNotFound'"></legend>
+                    <label class="dropdown col-60">
+                        <button data-bind="menu: { options: RouteSelect(true), value: $root.Config.Routes.Redirect404 }"></button>
+                    </label>
+                </fieldset>
+                <!-- not yet
+                <fieldset class="form-group">
+                    <legend class="aside col-30" data-bind="i18n: 'OptMaintainanceMode'" style="color: #f00"></legend>
+                    <label class="col-60">
+                        <input type="checkbox" data-bind="checked: $root.Config.Maintainance">
+                    </label>
+                </fieldset>
+                -->
+            </div>
+            <div class="col-40">
+                <h2 data-bind="i18n: 'SectionEditor'"></h2>
+                <fieldset>
+                    <legend class="aside col-30" data-bind="i18n: 'LabelMarkdown'"></legend>
+                    <div class="col-60">
+                        <input type="checkbox" data-bind="checked: $root.Config.Markdown.AutoLineBreak"> <span data-bind="i18n: 'OptMDAutoLineBreaks'"></span><br>
+                        <input type="checkbox" data-bind="checked: $root.Config.Markdown.AutoURLLinks"> <span data-bind="i18n: 'OptMDAutoLinks'"></span><br>
+                        <input type="checkbox" data-bind="checked: $root.Config.Markdown.EscapeHTML"> <span data-bind="i18n: 'OptMDEscapeHTML'"></span>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </section>
+
+    <section id="info" role="tabpanel" class="tabpanel">
+        <h2>PHP Version <span data-bind="text: PHPInfo.Version"></span></h2>
+        <!-- ko with: PHPInfo.Sections -->
+        <!-- ko foreach: { data: Object.keys($data), as: 'key' } -->
+        <p class="label aside" data-bind="i18n: key">
+            <span class="pre" data-bind="text: $parent[key]" style="white-space: normal"></span>
+        </p>
+        <!-- /ko -->
+        <!-- /ko -->
+    </section>
+</div>

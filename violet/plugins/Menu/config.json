@@ -1,0 +1,20 @@
+{
+    "name": "Menu Plugin",
+    "enabled": true,
+    "hidden": true,
+    "info": {
+        "version": "1.0",
+        "description": "This plugin is used to create the navigation for the website.\nPlace {{Menu}} anywhere in the template.",
+        "author": "violetCMS",
+        "email": "",
+        "homepage": "https://github.com/maxgrafik/violetCMS",
+        "license": "MIT"
+    },
+    "config": [
+        {
+            "label": "Show Submenus",
+            "type": "boolean",
+            "value": true
+        }
+    ]
+}

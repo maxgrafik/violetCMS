@@ -1,0 +1,25 @@
+{
+    "name": "Search Plugin",
+    "enabled": true,
+    "hidden": false,
+    "info": {
+        "version": "1.0",
+        "description": "This plugin allows you to make your website searchable.\nPlace the {{Search}} tag anywhere in a template to add the search field\nand add the {{Search}} tag to your search result page.",
+        "author": "violetCMS",
+        "email": "",
+        "homepage": "https://github.com/maxgrafik/violetCMS",
+        "license": "MIT"
+    },
+    "config": [
+        {
+            "label": "Searchresult Page",
+            "type": "page",
+            "value": "/search"
+        },
+        {
+            "label": "Hide invisible pages",
+            "type": "boolean",
+            "value": false
+        }
+    ]
+}

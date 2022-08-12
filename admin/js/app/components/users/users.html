@@ -1,0 +1,25 @@
+<header>
+    <h1 data-bind="i18n: 'HeadUsers'"></h1>
+    <div class="toolbar">
+        <button class="themed" data-bind="click: addUser, i18n: 'BtnAddUser'"></button>
+    </div>
+</header>
+
+<div class="tabcontent">
+
+    <section id="users" role="tabpanel" class="tabpanel active">
+
+        <ul data-bind="foreach: UsersAlphabetical">
+            <li>
+                <a data-bind="text: name, attr: { href: '#!/user/' + shortname() }, css: { disabled: !enabled() }"></a>
+                <span data-bind="text: title"></span>
+            </li>
+        </ul>
+
+    </section>
+
+</div>
+
+<dialog class="fullscreen" role="dialog" data-bind="modal: newUser" hidden>
+    <!-- ko component: { name: "newUser", params: { data: newUser, onSubmit: createUser.bind($component) } } --><!-- /ko -->
+</dialog>

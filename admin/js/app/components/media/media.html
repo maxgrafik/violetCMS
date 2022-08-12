@@ -1,0 +1,87 @@
+<header>
+    <h1 data-bind="i18n: 'HeadMedia'"></h1>
+    <div class="toolbar">
+        <button class="themed" data-bind="click: newFolder, i18n: 'BtnAddFolder'"></button>
+        <label class="button themed fileselect" data-bind="i18n: 'BtnUploadFile'">
+            <input type="file" multiple data-bind="fileSelect: upload">
+        </label>
+    </div>
+</header>
+
+<div id="media" class="tabcontent" data-bind="mouse: true">
+
+    <!-- ko if: showUpload -->
+    <div class="progress">
+        <div class="progress-value" data-bind="style: { width: showUploadProgress() + '%' }"></div>
+    </div>
+    <!-- /ko -->
+
+    <section role="tabpanel" class="tabpanel active dropzone" data-bind="drop: { accept: 'Files', onDrop: uploadFile }">
+
+        <div class="breadcrumb">
+            <!-- ko foreach: Breadcrumbs -->
+            <a data-bind="attr: { href: $data.url }, text: $data.name, click: $component.showDirectory"></a> /
+            <!-- /ko -->
+        </div>
+
+        <!-- ko with: BackButton -->
+        <figure class="media" data-bind="drop: { accept: 'text/uri-list', onDrop: $component.moveFile }">
+            <div draggable="false">
+                <img class="directory backbutton" src="img/icon-back.svg" draggable="false">
+            </div>
+            <figcaption data-bind="text: $data.name"></figcaption>
+        </figure>
+        <!-- /ko -->
+
+        <!-- ko foreach: MediaFiles -->
+
+        <!-- ko if: type() == 'directory' -->
+        <figure class="media" data-bind="css: { selected: selected, wiggle: $component.enableDelete },
+                                         drag: true,
+                                         drop: { accept: 'text/uri-list', onDrop: $component.moveFile }">
+            <div draggable="false">
+                <img data-bind="attr: { src: $component.MediaIcon($data) }" draggable="false">
+                <!-- ko if: $component.enableDelete -->
+                <button class="icon-delete" data-bind="click: $component.getConfirmDelete"></button>
+                <!-- /ko -->
+            </div>
+            <figcaption data-bind="visible: !editing(), text: name, click: edit"></figcaption>
+            <form data-bind="submit: function() { editing(false); }">
+                <input data-bind="visible: editing,
+                                  value: name,
+                                  hasFocus: editing,
+                                  disableDrag: editing,
+                                  event: { focus: function() { $element.select(); } }">
+            </form>
+        </figure>
+        <!-- /ko -->
+        <!-- ko ifnot: type() == 'directory' -->
+        <figure class="media" data-bind="css: { selected: selected, wiggle: $component.enableDelete },
+                                         drag: true">
+            <div draggable="false">
+                <img data-bind="attr: { src: $component.MediaIcon($data) }" draggable="false">
+                <!-- ko if: $component.enableDelete -->
+                <button class="icon-delete" data-bind="click: $component.getConfirmDelete"></button>
+                <!-- /ko -->
+            </div>
+            <figcaption data-bind="visible: !editing(), text: name, click: edit"></figcaption>
+            <form data-bind="submit: function() { editing(false); }">
+                <input data-bind="visible: editing,
+                                  value: name,
+                                  hasFocus: editing,
+                                  disableDrag: editing,
+                                  event: { focus: function() { $element.select(); } }">
+            </form>
+        </figure>
+        <!-- /ko -->
+
+        <!-- /ko -->
+
+    </section>
+</div>
+
+<!-- ko lightbox: MediaPreview() --><!-- /ko -->
+
+<dialog role="dialog" data-bind="modal: confirmDelete" hidden>
+    <!-- ko component: { name: "deleteFile", params: { data: confirmDelete, onSubmit: deleteFile.bind($component) } } --><!-- /ko -->
+</dialog>

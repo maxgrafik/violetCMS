@@ -1,0 +1,98 @@
+{"components" : [
+    {
+        "name"   : "Prefs",
+        "menu"   : false,
+        "icon"   : "",
+        "src"    : "components/prefs/prefs",
+        "route"  : "/prefs",
+        "reqAuth": false
+    },
+    {
+        "name"   : "Dashboard",
+        "menu"   : "User",
+        "icon"   : "icon-dashboard",
+        "src"    : "components/welcome/welcome",
+        "route"  : "/",
+        "reqAuth": false
+    },
+    {
+        "name"   : "Sitemap",
+        "menu"   : "User",
+        "icon"   : "icon-sitemap",
+        "src"    : "components/sitemap/sitemap",
+        "route"  : "/sitemap",
+        "reqAuth": true
+    },
+    {
+        "name"   : "Page",
+        "menu"   : false,
+        "icon"   : "",
+        "src"    : "components/page/page",
+        "route"  : "/page/*",
+        "reqAuth": true
+    },
+    {
+        "name"   : "Media",
+        "menu"   : "User",
+        "icon"   : "icon-media",
+        "src"    : "components/media/media",
+        "route"  : "/media",
+        "reqAuth": true
+    },
+    {
+        "name"   : "Plugins",
+        "menu"   : "Admin",
+        "icon"   : "icon-plugins",
+        "src"    : "components/plugins/plugins",
+        "route"  : "/plugins",
+        "reqAuth": true
+    },
+    {
+        "name"   : "Plugin",
+        "menu"   : false,
+        "icon"   : "",
+        "src"    : "components/plugin/plugin",
+        "route"  : "/plugin/*",
+        "reqAuth": true
+    },
+    {
+        "name"   : "Themes",
+        "menu"   : "Admin",
+        "icon"   : "icon-themes",
+        "src"    : "components/themes/themes",
+        "route"  : "/themes",
+        "reqAuth": true
+    },
+    {
+        "name"   : "Users",
+        "menu"   : "Admin",
+        "icon"   : "icon-users",
+        "src"    : "components/users/users",
+        "route"  : "/users",
+        "reqAuth": true
+    },
+    {
+        "name"   : "User",
+        "menu"   : false,
+        "icon"   : "",
+        "src"    : "components/user/user",
+        "route"  : "/user/*",
+        "reqAuth": true
+    },
+    {
+        "name"   : "Backups",
+        "menu"   : "Admin",
+        "icon"   : "icon-backups",
+        "src"    : "components/backups/backups",
+        "route"  : "/backups",
+        "reqAuth": true
+    },
+    {
+        "name"   : "Config",
+        "menu"   : "Admin",
+        "icon"   : "icon-config",
+        "src"    : "components/config/config",
+        "route"  : "/config",
+        "reqAuth": true
+    }
+]}

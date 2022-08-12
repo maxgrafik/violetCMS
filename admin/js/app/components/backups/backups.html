@@ -1,0 +1,20 @@
+<header>
+    <h1 data-bind="i18n: 'HeadBackups'"></h1>
+    <div class="toolbar">
+        <button class="themed" data-bind="click: createBackup, i18n: 'BtnCreateBackup', css: { 'icon-spinner': inProgress }"></button>
+    </div>
+</header>
+
+<div class="tabcontent">
+
+    <section id="backups" role="tabpanel" class="tabpanel active">
+        <ul data-bind="foreach: { data: Backups, as: 'Backup', noChildContext: true }">
+            <li>
+                <a data-bind="localeDateAndTime: Backup.date, attr: { href: Backup.url }"></a>
+                <span data-bind="text: Backup.size"></span>
+                <button class="icon-delete" data-bind="click: deleteBackup.bind($component, Backup), attr: { title: i18n('BtnDeleteFile') }"></button>
+            </li>
+        </ul>
+    </section>
+
+</div>

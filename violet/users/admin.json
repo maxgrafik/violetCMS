@@ -1,0 +1,19 @@
+{
+    "name": "Admin",
+    "title": "Administrator",
+    "email": "admin",
+    "language": "en",
+    "enabled": true,
+    "hash": "$2y$10$jY1q35bsuLEEI24oJMPXeuVgWu.jZuBFlfQXiGX6kPkx8ZHVg1nqi",
+    "access": [
+        "Sitemap",
+        "Page",
+        "Media",
+        "Plugins",
+        "Plugin",
+        "Users",
+        "User",
+        "Backups",
+        "Config"
+    ]
+}

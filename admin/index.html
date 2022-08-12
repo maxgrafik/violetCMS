@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+
+    <title>violetCMS · Admin</title>
+
+    <meta name="description" content="violetCMS">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <style id="framed">body{display:none !important;}</style>
+    <script type="text/javascript">
+        if (self === top) {
+            var el = document.getElementById("framed");
+            el.parentNode.removeChild(el);
+        } else {
+            top.location = self.location;
+        }
+    </script>
+
+</head>
+<body>
+
+    <!-- ko component: { name: "admin", params: $root } --><!-- /ko -->
+
+    <dialog id="login" role="dialog" hidden>
+        <form id="loginForm">
+            <a href="" class="logo"><img src="img/violetCMS.svg" alt="violetCMS"></a>
+            <input id="inputEmail" type="text" placeholder="Email" autocomplete="username" value="" required autofocus>
+            <input id="inputPass" type="password" placeholder="Password" autocomplete="current-password" value="" required>
+            <input type="submit" value="Login">
+        </form>
+    </dialog>
+
+    <script src="js/require.js" data-main="js/main"></script>
+
+</body>
+</html>

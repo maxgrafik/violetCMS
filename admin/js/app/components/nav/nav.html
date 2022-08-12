@@ -1,0 +1,31 @@
+<div class="logo">
+    <img src="img/violetCMS.svg">
+    <button class="hamburger">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+</div>
+
+<nav>
+    <!-- ko with: UserPrefs -->
+    <a class="userInfo" data-bind="click: $component.selectMenuItem">
+        <span data-bind="text: $parent.User.name"></span>
+        <span data-bind="text: $parent.User.title" class="label"></span>
+    </a>
+    <!-- /ko -->
+
+    <ul data-bind="foreach: { data: UserMenu, as: 'MenuItem' }">
+        <li data-bind="css: { active: MenuItem === $component.activeMenuItem() }">
+            <a data-bind="i18n: 'Menu'+MenuItem.name, class: MenuItem.icon, click: $component.selectMenuItem"></a>
+        </li>
+    </ul>
+    <ul data-bind="foreach: { data: AdminMenu, as: 'MenuItem' }">
+        <li data-bind="css: { active: MenuItem === $component.activeMenuItem() }">
+            <a data-bind="i18n: 'Menu'+MenuItem.name, class: MenuItem.icon, click: $component.selectMenuItem"></a>
+        </li>
+    </ul>
+    <ul>
+        <li><a class="icon-logout" data-bind="click: logout.bind($parent), i18n: 'MenuLogout'"></a></li>
+    </ul>
+</nav>

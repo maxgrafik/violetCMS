@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>{{Meta|Title}}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="{{Meta|Description}}">
+    <meta name="robots" content="{{Meta|Robots}}">
+
+    <link href="{{Meta|ThemeURL}}/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="wrapper">
+            <a href="{{Meta|RootURL}}"><img class="logo" src="{{Meta|ThemeURL}}/img/violetCMS.svg" alt="violetCMS"></a>
+            <button class="hamburger" type="button">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </button>
+            <nav>{{Menu}}</nav>
+        </div>
+    </header>
+
+    {#BANNER#}
+
+    <main class="wrapper">
+        <section class="content">
+            {CONTENT}
+        </section>
+        {#SIDEBAR#}
+    </main>
+
+    <footer>
+        <div class="wrapper">
+            <div class="row">
+                <div class="col-50">
+                    <h4>violetCMS</h4>
+                    <p>yet another flat file CMS</p>
+                </div>
+                <div class="col-50 alignright">
+                    <p><a href="https://github.com/maxgrafik/violetCMS">Get it on GitHub</a></p>
+                </div>
+            </div>
+            <div class="row disclaimer">
+                Copyright © 2022 · violetCMS is released under the MIT license
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{Meta|ThemeURL}}/js/main.js"></script>
+
+</body>
+</html>

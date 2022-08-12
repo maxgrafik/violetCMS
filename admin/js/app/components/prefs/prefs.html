@@ -1,0 +1,39 @@
+<header>
+    <h1 data-bind="i18n: 'HeadPrefs'"></h1>
+    <div class="toolbar">
+        <button class="themed" data-bind="click: save, i18n: 'BtnSaveChanges'"></button>
+    </div>
+</header>
+
+<div class="tabcontent">
+    <section id="preferences" role="tabpanel" class="tabpanel active">
+        <div class="row">
+            <div class="col-20"></div>
+            <div class="col-80">
+                <h2 data-bind="text: User.name" style="font-size: 2rem"></h2>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="aside" data-bind="i18n: 'LabelUserName'">
+                <input type="text" data-bind="attr: {placeholder: i18n('LabelUserName')}, value: User.name">
+            </label>
+            <label class="aside" data-bind="i18n: 'LabelUserTitle'">
+                <input type="text" data-bind="attr: {placeholder: i18n('LabelUserTitle')}, value: User.title">
+            </label>
+            <label class="aside" data-bind="i18n: 'LabelUserEmail'">
+                <input type="text" data-bind="attr: {placeholder: i18n('LabelUserEmail')}, value: User.email">
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="aside" data-bind="i18n: 'LabelUserNewPassword'">
+                <input type="password" autocomplete="new-password" data-bind="attr: {placeholder: i18n('LabelUserNewPassword')}, value: User.password">
+            </label>
+        </div>
+        <fieldset class="form-group">
+            <legend class="aside" data-bind="i18n: 'LabelUserLanguage'"></legend>
+            <label class="dropdown col-50">
+                <button data-bind="menu: { options: LanguageSelect, value: User.language }"></button>
+            </label>
+        </fieldset>
+    </section>
+</div>

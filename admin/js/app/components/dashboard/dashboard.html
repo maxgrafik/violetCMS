@@ -1,0 +1,58 @@
+<style>
+    .chart { padding: 0; margin: 0 -15px 0 -15px; }
+    svg { display: block; width: auto; height: auto; }
+    svg text { font-size: .857rem; }
+</style>
+
+<header>
+    <h1 data-bind="i18n: 'WelcomeMessage', i18nObj: { name: $root.User.name() }"></h1>
+</header>
+
+<div class="tabcontent">
+
+    <section id="dashboard" role="tabpanel" class="tabpanel active">
+        <div class="row">
+            <div class="col-50">
+                <div class="stats">
+                    <h3 data-bind="i18n: 'LabelStats'"></h3>
+                    <div class="chart" data-bind="chart: StatisticsByDay"></div>
+                    <div class="row">
+                        <div>
+                            <p class="big" data-bind="text: Statistics.today"></p>
+                            <p class="label" data-bind="i18n: 'LabelStatsToday'"></p>
+                        </div>
+                        <div>
+                            <p class="big" data-bind="text: Statistics.week"></p>
+                            <p class="label" data-bind="i18n: 'LabelStatsWeek'"></p>
+                        </div>
+                        <div>
+                            <p class="big" data-bind="text: Statistics.month"></p>
+                            <p class="label" data-bind="i18n: 'LabelStatsMonth'"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-50">
+                <div class="stats">
+                    <h3 data-bind="i18n: 'LabelStatsTopTenURLs'"></h3>
+                    <ul data-bind="foreach: TopTenURLs">
+                        <li>
+                            <span data-bind="text: url"></span>
+                            <span data-bind="text: count"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <h2 data-bind="i18n: 'SectionLastModified'"></h2>
+        <ul data-bind="foreach: LastModified">
+            <li>
+                <a data-bind="text: page, attr: { href: '#!/page' + url() }"></a>
+                <time data-bind="localeDateAndTime: date"></time>
+            </li>
+        </ul>
+    </section>
+
+    <small>violetCMS v1.0 · <a href="https://github.com/maxgrafik/violetCMS" target="_blank">GitHub</a></small>
+
+</div>

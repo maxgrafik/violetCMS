@@ -1,0 +1,76 @@
+/* ---  css animations --- */
+
+@keyframes fadeIn {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+.fadeIn {
+    animation: fadeIn .15s;
+}
+
+@keyframes fadeOut {
+    0%   { opacity: 1; }
+    100% { opacity: 0; }
+}
+.fadeOut {
+    animation: fadeOut .15s;
+}
+
+@keyframes popIn {
+    0%   { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1.0); }
+}
+.popIn {
+    animation: popIn .15s ease;
+}
+
+@keyframes popOut {
+    0%   { opacity: 1; transform: scale(1.0); }
+    100% { opacity: 0; transform: scale(0.9); }
+}
+.popOut {
+    animation: popOut .15s ease;
+}
+
+@keyframes slideIn {
+    0%   { opacity: 0; right: -300px; }
+    10%  { opacity: 1; right: 20px; }
+    90%  { opacity: 1; right: 20px; }
+    100% { opacity: 0; right: 20px; }
+}
+.slideIn {
+    animation: slideIn 5s;
+}
+
+@keyframes shake {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-10px); }
+    40%  { transform: translateX(10px); }
+    60%  { transform: translateX(-10px); }
+    80%  { transform: translateX(10px); }
+    100% { transform: translateX(0); }
+}
+.shake {
+    animation: shake .3s ease;
+}
+
+@keyframes wiggle1 {
+    0%  { transform: rotate(-1deg); }
+    50% { transform: rotate(1.5deg); }
+}
+
+@keyframes wiggle2 {
+    0%  { transform: rotate(1deg); }
+    50% { transform: rotate(-1.5deg); }
+}
+.wiggle:nth-of-type(2n) {
+    animation: wiggle1 .33s ease-in;
+    animation-iteration-count: infinite;
+    transform-origin: 50% 50%;
+}
+.wiggle:nth-of-type(2n-1) {
+    animation: wiggle2 .25s ease-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    transform-origin: 50% 50%;
+}
