@@ -12,17 +12,25 @@ namespace VioletCMS\Handler;
 class Log
 {
     private $violet;
+    private $logDir;
 
     public function __construct(\VioletCMS\VioletCMS $violet)
     {
         $this->violet = $violet;
+        $this->logDir = $this->violet->baseDir . DIRECTORY_SEPARATOR . 'logs';
+
+        if (!is_dir($this->logDir)) {
+            if (false === mkdir($this->logDir, 0755)) {
+                new APIError(500, 'Error creating logs directory');
+            }
+        }
     }
 
     public function access($status = 200, $bytes = 0)
     {
         $logFileName = date('Y-m') . '.log';
 
-        $logFile = $this->violet->baseDir . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . $logFileName;
+        $logFile = $this->logDir . DIRECTORY_SEPARATOR . $logFileName;
 
         $logEntry = array();
 
@@ -41,7 +49,7 @@ class Log
 
     public function login($loginName, $deviceCookie)
     {
-        $logFile = $this->violet->baseDir . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . 'logins.log';
+        $logFile = $this->logDir . DIRECTORY_SEPARATOR . 'logins.log';
 
         $name   = preg_replace('/[^A-Za-z0-9@.]/', '', $loginName);
         $cookie = $deviceCookie ?? '';
@@ -53,7 +61,7 @@ class Log
 
     public function getFailedLogins($loginName, $deviceCookie, $timestamp, $maxAttempts)
     {
-        $logFile = $this->violet->baseDir . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . 'logins.log';
+        $logFile = $this->logDir . DIRECTORY_SEPARATOR . 'logins.log';
 
         if (!file_exists($logFile)) {
             return 0;
@@ -105,7 +113,7 @@ class Log
 
     public function debug($msg)
     {
-        $logFile = $this->violet->baseDir . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . 'debug.log';
+        $logFile = $this->logDir . DIRECTORY_SEPARATOR . 'debug.log';
 
         $timestamp = date("Y-m-d H:i:s");
 
