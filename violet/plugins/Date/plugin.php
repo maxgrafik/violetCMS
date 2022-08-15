@@ -28,22 +28,27 @@ class DatePlugin extends Plugin
 
     public function formatDate($value)
     {
-        list($date, $locale) = array_pad(explode('@', $value), 2, null);
+        $date = date('Y-m-d');
+        $locale = 'en';
 
-        if (!$locale) {
-            $locale = 'en';
+        if (isset($value)) {
+            list($date, $locale) = array_pad(explode('@', $value), 2, null);
         }
 
         if ($date === 'published') {
             $date = $this->context->page['Frontmatter']['publishDate'] ?? $this->context->page['Frontmatter']['date'] ?? null;
         }
 
-        if ($date === 'today') {
-            $date = date("Y-m-d");
+        if (!isset($date) || empty($date)) {
+            $date = date('Y-m-d');
         }
 
-        if (!$date) {
-            return '';
+        if (!isset($locale)) {
+            $locale = 'en';
+        }
+
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+            return false;
         }
 
         $date = strtotime($date);

@@ -57,7 +57,15 @@ class SearchPlugin extends Plugin
     {
         $result = array();
 
+        if (!isset($pages) || empty($pages)) {
+            return $result;
+        }
+
         foreach ($pages as $page) {
+
+            if (!$page || !isset($page['title']) || !isset($page['url'])) {
+                continue;
+            }
 
             /** don't include search result page */
             if ($page['url'] === $this->config['Searchresult Page']) {
@@ -65,7 +73,7 @@ class SearchPlugin extends Plugin
             }
 
             /** check published state and dates */
-            if ($page['published'] === false) {
+            if (isset($page['published']) && $page['published'] === false) {
                 continue;
             }
 
@@ -101,7 +109,7 @@ class SearchPlugin extends Plugin
                 }
             }
 
-            if ($page['children']) {
+            if (!empty($page['children'])) {
                 $result = array_merge($result, $this->search($page['children'], $needle));
             }
 
