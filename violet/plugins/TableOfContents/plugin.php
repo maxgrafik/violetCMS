@@ -29,12 +29,20 @@ class TableOfContentsPlugin extends Plugin
 
         $page = $this->getPageFromURL($this->context->route);
 
+        if (!$page || empty($page['children'])) {
+            return '';
+        }
+
         $content = '';
 
         foreach ($page['children'] as $child) {
 
+            if (!$child || !isset($child['title']) || !isset($child['url'])) {
+                continue;
+            }
+
             /** check published state and dates */
-            if ($child['published'] === false) {
+            if (isset($child['published']) && $child['published'] === false) {
                 continue;
             }
 
@@ -87,7 +95,7 @@ class TableOfContentsPlugin extends Plugin
             if ($route === $url) {
                 return $node;
             }
-            if (count($node['children']) > 0) {
+            if (!empty($node['children'])) {
                 if ($tmp = $this->getPageFromURL($url, $node['children'])) {
                     return $tmp;
                 }

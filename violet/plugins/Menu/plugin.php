@@ -28,12 +28,20 @@ class MenuPlugin extends Plugin
 
     private function buildMenu($pages)
     {
+        if (!isset($pages) || empty($pages)) {
+            return '';
+        }
+
         $html = '<ul>';
 
         foreach ($pages as $page) {
 
+            if (!$page || !isset($page['title']) || !isset($page['url'])) {
+                continue;
+            }
+
             /** check published state and dates */
-            if ($page['published'] === false) {
+            if (isset($page['published']) && $page['published'] === false) {
                 continue;
             }
 
@@ -62,7 +70,7 @@ class MenuPlugin extends Plugin
             $html .= '<li><a href="' . $url . '">' . $menuTitle . '</a>';
 
             /** should sub menu items be shown? */
-            if ($this->config['Show Submenus'] && $page['children']) {
+            if ($this->config['Show Submenus'] && !empty($page['children'])) {
                 $html .= $this->buildMenu($page['children']);
             }
 

@@ -23,11 +23,15 @@ class MetaPlugin extends Plugin
 
     public function setMetaTags($value)
     {
+        if (empty($value)) {
+            return false;
+        }
+
         $page = $this->context->page['Frontmatter'] ?? null;
 
         switch (strtolower($value)) {
         case 'title':
-            $title = $this->violet->config['Website']['Title'];
+            $title = $this->violet->config['Website']['Title'] ?? '';
             $pageTitle = $page['title'] ?? '';
             if (!$this->context->is404 && $pageTitle) {
                 $title .= ' · ' . $pageTitle;

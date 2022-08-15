@@ -24,15 +24,13 @@ class SubmenuPlugin extends Plugin
 
     public function onTemplateLoaded($value)
     {
-        $html = '<ul>';
+        $pages = $this->getChildPages($value);
 
-        if ($value) {
-            $page = $this->getPageFromURL($value);
-        } else {
-            $page = $this->getPageFromURL($this->context->route);
+        if (!isset($pages) || empty($pages)) {
+            return '';
         }
 
-        $pages = $this->getChildPages($page);
+        $html = '<ul>';
 
         foreach ($pages as $child) {
 
@@ -51,17 +49,13 @@ class SubmenuPlugin extends Plugin
 
     public function onContentLoaded($value)
     {
-        $content = '';
+        $pages = $this->getChildPages($value);
 
-        if ($value) {
-            $url = $this->violet->rootURL . $this->violet->getCleanRoute($value);
-            $url = Utils::sanitizeURL($url);
-            $page = $this->getPageFromURL($url);
-        } else {
-            $page = $this->getPageFromURL($this->context->route);
+        if (!isset($pages) || empty($pages)) {
+            return '';
         }
 
-        $pages = $this->getChildPages($page);
+        $content = '';
 
         foreach ($pages as $child) {
             $content .= "* [".$child['title']."](".$child['url'].")\n";
@@ -70,14 +64,29 @@ class SubmenuPlugin extends Plugin
         return $content;
     }
 
-    private function getChildPages($node)
+    private function getChildPages($url)
     {
+        if ($url) {
+            $url = $this->violet->getCleanRoute($url);
+            $page = $this->getPageFromURL($url);
+        } else {
+            $page = $this->getPageFromURL($this->context->route);
+        }
+
+        if (!$page || empty($page['children'])) {
+            return false;
+        }
+
         $pages = array();
 
-        foreach ($node['children'] as $child) {
+        foreach ($page['children'] as $child) {
+
+            if (!$child || !isset($child['title']) || !isset($child['url'])) {
+                continue;
+            }
 
             /** check published state and dates */
-            if ($child['published'] === false) {
+            if (isset($child['published']) && $child['published'] === false) {
                 continue;
             }
 
@@ -116,7 +125,7 @@ class SubmenuPlugin extends Plugin
             if ($route === $url) {
                 return $node;
             }
-            if (count($node['children']) > 0) {
+            if (!empty($node['children'])) {
                 if ($tmp = $this->getPageFromURL($url, $node['children'])) {
                     return $tmp;
                 }
