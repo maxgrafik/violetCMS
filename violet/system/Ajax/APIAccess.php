@@ -42,7 +42,7 @@ class APIAccess
          * https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#verifying-origin-with-standard-headers
          */
 
-        $target = Utils::getHost();
+        $target = Utils::getHost(self::$violet->config['Routes']['Domain']);
         if (!$target) {
             new APIError(400);
         }
@@ -406,10 +406,15 @@ class APIAccess
 
     private static function setCookie($name, $data, $lifetime)
     {
+        $host = Utils::getHost(self::$violet->config['Routes']['Domain']);
+        if (!$host) {
+            return;
+        }
+
         $options = array(
             'expires'  => $lifetime !== 0 ? time()+$lifetime : 0,
             'path'     => self::$violet->rootURL,
-            'domain'   => Utils::getHost(),
+            'domain'   => $host,
             'secure'   => (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off'),
             'httponly' => true,
             'samesite' => 'Strict'
@@ -419,10 +424,15 @@ class APIAccess
 
     private static function revokeCookie()
     {
+        $host = Utils::getHost(self::$violet->config['Routes']['Domain']);
+        if (!$host) {
+            return;
+        }
+
         $options = array(
             'expires'  => 1,
             'path'     => self::$violet->rootURL,
-            'domain'   => Utils::getHost(),
+            'domain'   => $host,
             'secure'   => (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off'),
             'httponly' => true,
             'samesite' => 'Strict'

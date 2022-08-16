@@ -44,6 +44,7 @@ define(["knockout", "knockout-mapping", "knockout-bindings", "utils", "ajax", "i
                 Meta        : ko.observableArray([])
             },
             Routes: {
+                Domain      : ko.observable(null),
                 Home        : ko.observable(""),
                 HideInURL   : ko.observable(true),
                 Redirect404 : ko.observable("/error")
@@ -51,7 +52,7 @@ define(["knockout", "knockout-mapping", "knockout-bindings", "utils", "ajax", "i
             Theme: ko.observable(""),
             Maintainance: ko.observable(false),
             Markdown: {
-                AutoLineBreak : ko.observable(false),
+                AutoLineBreak : ko.observable(true),
                 AutoURLLinks  : ko.observable(true),
                 EscapeHTML    : ko.observable(true)
             }
@@ -87,6 +88,7 @@ define(["knockout", "knockout-mapping", "knockout-bindings", "utils", "ajax", "i
         ajax.get("?q=config", function(data) {
             if (data) {
                 koMapping.fromJS(data.Config, {}, root.Config);
+                root.Config.dirtyFlag.setClean();
             }
         }, null);
     };

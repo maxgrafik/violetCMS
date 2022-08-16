@@ -43,6 +43,12 @@
 
                 <h2 data-bind="i18n: 'SectionRoutes'"></h2>
                 <fieldset class="form-group">
+                    <legend class="aside col-30" data-bind="i18n: 'LabelDomain'"></legend>
+                    <label class="col-60">
+                        <input type="text" data-bind="attr: {placeholder: i18n('LabelDomain')}, value: $root.Config.Routes.Domain">
+                    </label>
+                </fieldset>
+                <fieldset class="form-group">
                     <legend class="aside col-30" data-bind="i18n: 'LabelSiteHome'"></legend>
                     <label class="dropdown col-60">
                         <button data-bind="menu: { options: RouteSelect(false), value: $root.Config.Routes.Home }"></button>

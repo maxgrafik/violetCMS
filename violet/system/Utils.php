@@ -32,7 +32,7 @@ class Utils
      * https://stackoverflow.com/questions/1459739/php-serverhttp-host-vs-serverserver-name-am-i-understanding-the-ma/8909559#8909559
      */
 
-    public static function getHost()
+    public static function getHost($trustedHost = null)
     {
         $sources = array('HTTP_X_FORWARDED_HOST', 'HTTP_HOST', 'SERVER_NAME');
         $sourceTransformations = array(
@@ -55,8 +55,17 @@ class Utils
             }
         }
 
-        $host = preg_replace('/:\d+$/', '', $host);
-        return trim($host);
+        $host = trim(preg_replace('/:\d+$/', '', $host));
+
+        if ($host && !preg_match('/^\[?(?:[a-zA-Z0-9-:\]_]+\.?)+$/', $host)) {
+            return null;
+        }
+
+        if (isset($trustedHost) && $host !== $trustedHost) {
+            return null;
+        }
+
+        return $host;
     }
 
     public static function sanitizeURL($url)

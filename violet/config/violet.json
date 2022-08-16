@@ -3,14 +3,10 @@
         "Title": "violetCMS",
         "Description": "yet another flat file CMS",
         "Keywords": "",
-        "Meta": [
-            {
-                "name": "",
-                "content": ""
-            }
-        ]
+        "Meta": []
     },
     "Routes": {
+        "Domain": null,
         "Home": "/welcome",
         "HideInURL": true,
         "Redirect404": "/error"

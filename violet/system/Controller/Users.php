@@ -146,15 +146,18 @@ class Users extends Controller
              * won't be ignored.
              */
 
-            $options = array(
-                'expires'  => 1,
-                'path'     => $this->violet->rootURL,
-                'domain'   => Utils::getHost(),
-                'secure'   => (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off'),
-                'httponly' => true,
-                'samesite' => 'Strict'
-            );
-            setcookie('violetFP', '', $options);
+            $host = Utils::getHost($this->violet->config['Routes']['Domain']);
+            if ($host) {
+                $options = array(
+                    'expires'  => 1,
+                    'path'     => $this->violet->rootURL,
+                    'domain'   => $host,
+                    'secure'   => (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off'),
+                    'httponly' => true,
+                    'samesite' => 'Strict'
+                );
+                setcookie('violetFP', '', $options);
+            }
 
             return array('success' => 'must re-authenticate');
         }

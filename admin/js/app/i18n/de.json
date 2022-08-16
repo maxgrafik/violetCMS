@@ -113,6 +113,7 @@
         "LabelSiteMeta"         : "Meta Tags",
         "LabelSiteMetaProperty" : "Name/Property, z.B. og:title",
         "LabelSiteMetaContent"  : "Inhalt",
+        "LabelDomain"           : "Domain",
         "LabelSiteHome"         : "Startseite",
         "LabelPageNotFound"     : "Fehlerseite",
         "LabelSiteTheme"        : "Theme",
