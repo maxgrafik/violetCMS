@@ -151,8 +151,6 @@ define(["knockout", "knockout-mapping", "ajax", "rubberband", "utils", "text!com
                 let holdTimer = null;
                 let holdDelay = 800;
 
-                let lastClick = 0;
-
                 // @todo Holding down the mouse button to enter "delete mode"
                 // is not really intuitive on Desktop
 
@@ -178,7 +176,7 @@ define(["knockout", "knockout-mapping", "ajax", "rubberband", "utils", "text!com
                             const data = ko.dataFor(fig);
                             if (event.shiftKey) {
                                 data.selected(true);
-                            } else if (Date.now()-lastClick < 500) {
+                            } else if (event.detail === 2) {
                                 // double click
                                 if (data.type() === "directory") {
                                     self.enableDelete(false);
@@ -195,7 +193,6 @@ define(["knockout", "knockout-mapping", "ajax", "rubberband", "utils", "text!com
                                 self.clearSelection();
                                 data.selected(true);
                             }
-                            lastClick = Date.now();
                         }
                     } else {
                         self.enableDelete(false);
@@ -358,7 +355,11 @@ define(["knockout", "knockout-mapping", "ajax", "rubberband", "utils", "text!com
         ajax.get("?q=media&url="+url, function(data) {
             if (data) {
                 self.currentDirectory(data.Media.currentURL);
-                self.rootURL(data.Media.rootURL);
+                if (data.Media.rootURL === "/") {
+                    self.rootURL("");
+                } else {
+                    self.rootURL(data.Media.rootURL);
+                }
 
                 // Augment the MediaFiles ViewModel
                 /* eslint-disable-next-line no-inner-declarations */

@@ -334,4 +334,11 @@ class File
         return $dir . File::DS . $fileSafeName;
     }
 
+    public function getRelativePath($path, $basePath)
+    {
+        if (0 === strpos($path, $basePath)) {
+            $path = substr($path, strlen($basePath));
+        }
+        return $path;
+    }
 }

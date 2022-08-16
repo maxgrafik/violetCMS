@@ -20,6 +20,7 @@ use VioletCMS\Ajax\AjaxResponse;
 use VioletCMS\Controller\Users;
 use VioletCMS\Handler\JWT;
 use VioletCMS\Handler\Log;
+use VioletCMS\Utils;
 
 class APIAccess
 {
@@ -37,14 +38,27 @@ class APIAccess
             new APIError(405);
         }
 
-        $target = $_SERVER['HTTP_HOST'] ?? null;
-        $referer = isset($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST) : null;
-
         /**
          * https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#verifying-origin-with-standard-headers
          */
 
-        if (!$target || !$referer || $target !== $referer) {
+        $target = Utils::getHost();
+        if (!$target) {
+            new APIError(400);
+        }
+
+        $origin  = isset($_SERVER['HTTP_ORIGIN'])  ? parse_url($_SERVER['HTTP_ORIGIN'], PHP_URL_HOST) : null;
+        $referer = isset($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST) : null;
+
+        if ($origin) {
+            if ($origin !== $target) {
+                new APIError(400);
+            }
+        } elseif ($referer) {
+            if ($referer !== $target) {
+                new APIError(400);
+            }
+        } else {
             new APIError(400);
         }
 
@@ -395,7 +409,7 @@ class APIAccess
         $options = array(
             'expires'  => $lifetime !== 0 ? time()+$lifetime : 0,
             'path'     => self::$violet->rootURL,
-            'domain'   => $_SERVER['HTTP_HOST'],
+            'domain'   => Utils::getHost(),
             'secure'   => (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off'),
             'httponly' => true,
             'samesite' => 'Strict'
@@ -408,7 +422,7 @@ class APIAccess
         $options = array(
             'expires'  => 1,
             'path'     => self::$violet->rootURL,
-            'domain'   => $_SERVER['HTTP_HOST'],
+            'domain'   => Utils::getHost(),
             'secure'   => (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off'),
             'httponly' => true,
             'samesite' => 'Strict'

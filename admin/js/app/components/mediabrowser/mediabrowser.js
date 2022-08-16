@@ -105,7 +105,11 @@ define(["knockout", "knockout-mapping", "ajax", "text!components/media/media.jso
         ajax.get("?q=media&url="+url, function(data) {
             if (data) {
                 self.currentDirectory(data.Media.currentURL);
-                self.rootURL(data.Media.rootURL);
+                if (data.Media.rootURL === "/") {
+                    self.rootURL("");
+                } else {
+                    self.rootURL(data.Media.rootURL);
+                }
 
                 koMapping.fromJS(data.Media.files, {}, self.MediaFiles);
                 self.MediaFiles.sort(function(item1, item2) {

@@ -15,6 +15,7 @@ namespace VioletCMS\Controller;
 
 use VioletCMS\Ajax\APIError;
 use VioletCMS\Handler\File;
+use VioletCMS\Utils;
 
 class Users extends Controller
 {
@@ -148,7 +149,7 @@ class Users extends Controller
             $options = array(
                 'expires'  => 1,
                 'path'     => $this->violet->rootURL,
-                'domain'   => $_SERVER['HTTP_HOST'],
+                'domain'   => Utils::getHost(),
                 'secure'   => (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off'),
                 'httponly' => true,
                 'samesite' => 'Strict'

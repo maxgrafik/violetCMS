@@ -85,10 +85,13 @@ class VioletCMS
          * Unfortunately $_SERVER['DOCUMENT_ROOT'] is unreliable in some
          * shared hosting environments, therefore this hacky solution
          */
-        $this->rootURL = '/' . ltrim(preg_replace('/(\/index|\/violet\/api|\/violet\/download)\.php/', '', $_SERVER['SCRIPT_NAME']), '/');
-        $this->baseURL  = $this->rootURL . '/violet';
-        $this->themeURL = $this->rootURL . '/themes/' . $activeTheme;
-        $this->mediaURL = $this->rootURL . '/media/';
+        $this->rootURL = '/' . ltrim(preg_replace('/(\/index|\/violet\/api|\/violet\/download)\.php$/', '', $_SERVER['SCRIPT_NAME']), '/');
+
+        $sep = $this->rootURL === '/' ? '' : '/';
+
+        $this->baseURL  = $this->rootURL . $sep . 'violet';
+        $this->themeURL = $this->rootURL . $sep . 'themes/' . $activeTheme;
+        $this->mediaURL = $this->rootURL . $sep . 'media/';
     }
 
     public function getCleanRoute($route)

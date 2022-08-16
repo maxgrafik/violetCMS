@@ -5,7 +5,7 @@ robots: index, follow
 published: true
 visible: true
 ---
-{{Date|today@en}}
+{{Date}}
 
 # Markdown Test {#header}
 

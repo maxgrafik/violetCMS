@@ -46,7 +46,7 @@ class SearchPlugin extends Plugin
     public function onTemplateLoaded()
     {
         $html = '';
-        $html .= '<form accept-charset="UTF-8" method="get" action="'.$this->violet->rootURL.$this->config['Searchresult Page'].'" class="searchform">';
+        $html .= '<form accept-charset="UTF-8" method="get" action="'.rtrim($this->violet->rootURL, '/').$this->config['Searchresult Page'].'" class="searchform">';
         $html .= '<input type="text" name="q" value="">';
         $html .= '</form>';
 

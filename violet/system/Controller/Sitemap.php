@@ -95,7 +95,7 @@ class Sitemap extends Controller
 
     public function getPageFromPath($path)
     {
-        $url = str_replace($this->violet->pagesDir, '', $path);
+        $url = $this->fileHandler->getRelativePath($path, $this->violet->pagesDir);
         $url = str_replace(File::DS, '/', $url);
         return $this->getNodeFromURL($url, $this->Sitemap);
     }

@@ -60,7 +60,10 @@ class Request
         list($request, $query) = array_pad(explode('?', $_SERVER['REQUEST_URI']), 2, null);
 
         /* make the request CMS relative */
-        $request = str_replace($this->violet->rootURL, '', $request);
+        $rootURL = $this->violet->rootURL;
+        if ($rootURL !== '/' && 0 === strpos($request, $rootURL)) {
+            $request = substr($request, strlen($rootURL));
+        }
 
         /* cleanup route */
         $route = $this->violet->getCleanRoute($request);
@@ -211,11 +214,7 @@ class Request
 
     private function redirect301($route, $query)
     {
-        if (substr($route, 0, 1) === '/') {
-            $newRoute = $this->violet->rootURL . $route . ($query ? '?'.$query : '');
-        } else {
-            $newRoute = $route . ($query ? '?'.$query : '');
-        }
+        $newRoute = rtrim($this->violet->rootURL, '/') . $route . ($query ? '?'.$query : '');
 
         $this->logHandler->access(301, 0);
 

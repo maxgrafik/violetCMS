@@ -28,6 +28,36 @@ class Utils
         return round($bytes, $precision) . ' ' . $units[$pow];
     }
 
+    /**
+     * https://stackoverflow.com/questions/1459739/php-serverhttp-host-vs-serverserver-name-am-i-understanding-the-ma/8909559#8909559
+     */
+
+    public static function getHost()
+    {
+        $sources = array('HTTP_X_FORWARDED_HOST', 'HTTP_HOST', 'SERVER_NAME');
+        $sourceTransformations = array(
+            "HTTP_X_FORWARDED_HOST" => function($value) {
+                $elements = explode(',', $value);
+                return trim(end($elements));
+            }
+        );
+        $host = '';
+        foreach ($sources as $source) {
+            if (!empty($host)) {
+                break;
+            };
+            if (empty($_SERVER[$source])) {
+                continue;
+            }
+            $host = $_SERVER[$source];
+            if (array_key_exists($source, $sourceTransformations)) {
+                $host = $sourceTransformations[$source]($host);
+            }
+        }
+
+        $host = preg_replace('/:\d+$/', '', $host);
+        return trim($host);
+    }
 
     public static function sanitizeURL($url)
     {

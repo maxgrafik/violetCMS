@@ -62,7 +62,7 @@ class MenuPlugin extends Plugin
                 continue;
             }
 
-            $url = $this->violet->rootURL . $this->violet->getCleanRoute($page['url']);
+            $url = rtrim($this->violet->rootURL, '/') . $this->violet->getCleanRoute($page['url']);
             $url = Utils::sanitizeURL($url);
 
             $menuTitle = Utils::sanitizeAttribute($page['title']);

@@ -16,6 +16,15 @@ use VioletCMS\Handler\File;
 
 class Media extends Controller
 {
+    private $fileHandler;
+
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+        $this->fileHandler = new File();
+    }
+
+
     public function get($args = null)
     {
         if (empty($args) || !isset($args['url'])) {
@@ -89,7 +98,8 @@ class Media extends Controller
                     continue;
                 }
 
-                $fileURL = str_replace(File::DS, '/', str_replace($this->violet->rootDir, '', $filePath));
+                $fileURL = $this->fileHandler->getRelativePath($filePath, $this->violet->rootDir);
+                $fileURL = str_replace(File::DS, '/', $fileURL);
 
                 if (is_file($filePath)) {
                     $files[] = array('name' => $file, 'type' => $mimeType, 'url' => $fileURL);
@@ -100,7 +110,8 @@ class Media extends Controller
             }
             closedir($handle);
 
-            $currentURL = str_replace(File::DS, '/', str_replace($this->violet->rootDir, '', $currentDir));
+            $currentURL = $this->fileHandler->getRelativePath($currentDir, $this->violet->rootDir);
+            $currentURL = str_replace(File::DS, '/', $currentURL);
 
             return array('files' => $files, 'currentURL' => $currentURL, 'rootURL' => $this->violet->rootURL);
         }
@@ -114,17 +125,15 @@ class Media extends Controller
             new APIError(400, 'Invalid parameters');
         }
 
-        $fileHandler = new File();
-
         $dir = $this->violet->getPathFromURL($url, 'media');
 
         if (!is_dir($dir)) {
             new APIError(400, 'Invalid URL');
         }
 
-        $dirName = $fileHandler->getUniqueFileName($dir, 'untitled');
+        $dirName = $this->fileHandler->getUniqueFileName($dir, 'untitled');
 
-        $fileHandler->createDirectory($dir, $dirName);
+        $this->fileHandler->createDirectory($dir, $dirName);
     }
 
     private function renameMediaFile($args)
@@ -136,8 +145,6 @@ class Media extends Controller
             new APIError(400, 'Invalid parameters');
         }
 
-        $fileHandler = new File();
-
         $fileOldPath = $this->violet->getPathFromURL($file, 'media');
 
         if (!file_exists($fileOldPath)) {
@@ -145,7 +152,7 @@ class Media extends Controller
         }
 
         $dir = pathinfo($fileOldPath, PATHINFO_DIRNAME);
-        $fileNewPath = $fileHandler->getSafeFileName($dir, $name);
+        $fileNewPath = $this->fileHandler->getSafeFileName($dir, $name);
 
         rename($fileOldPath, $fileNewPath);
 
@@ -167,8 +174,6 @@ class Media extends Controller
             new APIError(400, 'Invalid parameters');
         }
 
-        $fileHandler = new File();
-
         $dir = $this->violet->getPathFromURL($url, 'media');
 
         if (!is_dir($dir)) {
@@ -183,7 +188,7 @@ class Media extends Controller
                 continue;
             }
 
-            $targetPath = $fileHandler->getSafeFileName($dir, pathinfo($file, PATHINFO_BASENAME));
+            $targetPath = $this->fileHandler->getSafeFileName($dir, pathinfo($file, PATHINFO_BASENAME));
 
             rename($sourcePath, $targetPath);
 
@@ -198,7 +203,7 @@ class Media extends Controller
 
                 if (file_exists($sourceThumbPath)) {
                     if (!file_exists($targetThumbsDir)) {
-                        $fileHandler->createDirectory(pathinfo($targetPath, PATHINFO_DIRNAME), 'thumbs');
+                        $this->fileHandler->createDirectory(pathinfo($targetPath, PATHINFO_DIRNAME), 'thumbs');
                     }
                     rename($sourceThumbPath, $targetThumbPath);
                 }
@@ -214,13 +219,11 @@ class Media extends Controller
             new APIError(400, 'Invalid parameters');
         }
 
-        $fileHandler = new File();
-
         foreach ($fileList as $file) {
             $path = $this->violet->getPathFromURL($file, 'media');
 
             if (is_dir($path)) {
-                $fileHandler->deleteDir($path);
+                $this->fileHandler->deleteDir($path);
             } elseif (is_file($path)) {
 
                 // delete thumb first (if any)

@@ -34,7 +34,7 @@ class SubmenuPlugin extends Plugin
 
         foreach ($pages as $child) {
 
-            $url = $this->violet->rootURL . $this->violet->getCleanRoute($child['url']);
+            $url = rtrim($this->violet->rootURL, '/') . $this->violet->getCleanRoute($child['url']);
             $url = Utils::sanitizeURL($url);
 
             $title = Utils::sanitizeAttribute($child['title']);
