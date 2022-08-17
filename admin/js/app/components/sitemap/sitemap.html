@@ -13,11 +13,16 @@
 
         <script id="sitemapTemplate" type="text/html">
             <li>
+                <!-- ko if: children().length > 0 -->
+                <button class="collapse" data-bind="click: $component.hideChildren, css: { collapsed: $component.isCollapsed($data) }"></button>
+                <!-- /ko -->
                 <span data-bind="class: $component.PageIcon($data)"></span>
                 <a data-bind="text: title, attr: { href: '#!/page' + url() }"></a>
                 <span data-bind="text: url"></span>
                 <button class="icon-delete" data-bind="click: $component.getConfirmDelete.bind($component), attr: { title: i18n('BtnDeletePage') }"></button>
+                <!-- ko ifnot: $component.isCollapsed($data) -->
                 <ul data-bind="sortable: {foreach: children, name: 'sitemapTemplate', options: { onEnd: $component.movePage }}"></ul>
+                <!-- /ko -->
             </li>
         </script>
 

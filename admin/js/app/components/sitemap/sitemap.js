@@ -58,6 +58,22 @@ define(["knockout", "knockout-mapping", "knockout-sortable", "ajax", "slugify/sl
 
         /* ----- HELPERS ----- */
 
+        self.CollapsedNodes = ko.observableArray([]);
+        self.isCollapsed = function(node) {
+            return ko.pureComputed(function() {
+                return self.CollapsedNodes().includes(node.url());
+            });
+        };
+        self.hideChildren = function(node) {
+            if (self.CollapsedNodes().includes(node.url())) {
+                self.CollapsedNodes.remove(node.url());
+            } else {
+                self.CollapsedNodes.push(node.url());
+            }
+            sessionStorage.setItem("violetSavedState", ko.toJSON(self.CollapsedNodes));
+        };
+
+
         self.newPage = ko.observable(null);
         self.confirmDelete = ko.observable(null);
 
@@ -91,6 +107,18 @@ define(["knockout", "knockout-mapping", "knockout-sortable", "ajax", "slugify/sl
             if (data) {
                 koMapping.fromJS(data.Sitemap, {}, self.Sitemap);
                 koMapping.fromJS(data.Templates, {}, self.Templates);
+
+                const savedState = sessionStorage.getItem("violetSavedState");
+                if (savedState) {
+                    self.CollapsedNodes(JSON.parse(savedState));
+                } else {
+                    // set top level nodes collapsed
+                    ko.utils.arrayForEach(self.Sitemap(), function(node) {
+                        if (node.children().length > 0) {
+                            self.CollapsedNodes.push(node.url());
+                        }
+                    });
+                }
             }
         }, null);
     };

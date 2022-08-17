@@ -440,6 +440,22 @@ ul.tablist > li.active > a {
     background-size: 20px;
 }
 
+button.collapse {
+    float: left;
+    margin: 0 6px 0 -2px;
+    padding: 0;
+    width: 12px;
+    height: 24px;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent url("../img/icon-caret-down.svg") 50% 50% no-repeat;
+    background-size: 24px;
+}
+button.collapse.collapsed {
+    background: transparent url("../img/icon-caret-right.svg") 50% 50% no-repeat;
+    background-size: 24px;
+}
+
 
 /* ----- SORTABLE ----- */
 
