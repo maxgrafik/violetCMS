@@ -1,12 +1,16 @@
-## Version 1.1.0
+## 2022-08-17
 
-Added option to set domain, some code refactoring
+List of child pages is now collapsible
 
-## Version 1.0.1
+## 2022-08-16
+
+Added option to explicitly set domain, some code refactoring
+
+## 2022-08-15
 
 Added some fail checks to plugins
 
 
-## Version 1.0
+## 2022-08-12
 
 Initial release
