@@ -27,10 +27,14 @@ class APIAccess
     private static $violet;
     private static $JWT;
 
+    private static $logHandler;
+
     public static function verifyRequest()
     {
         self::$violet = new VioletCMS();
         self::$JWT = new JWT(self::$violet);
+
+        self::$logHandler = new Log(self::$violet);
 
         $method = $_SERVER['REQUEST_METHOD'] ?? null;
 
@@ -44,6 +48,7 @@ class APIAccess
 
         $target = Utils::getHost(self::$violet->config['Routes']['Domain']);
         if (!$target) {
+            self::$logHandler->debug("Bad request: Could not get host");
             new APIError(400);
         }
 
@@ -52,19 +57,23 @@ class APIAccess
 
         if ($origin) {
             if ($origin !== $target) {
+                self::$logHandler->debug("Bad request: target/origin mismatch");
                 new APIError(400);
             }
         } elseif ($referer) {
             if ($referer !== $target) {
+                self::$logHandler->debug("Bad request: target/referer mismatch");
                 new APIError(400);
             }
         } else {
+            self::$logHandler->debug("Bad request: no origin or referer");
             new APIError(400);
         }
 
         $requestedWith = $_SERVER['HTTP_X_REQUESTED_WITH'] ?? null;
 
         if ($requestedWith !== 'XMLHttpRequest') {
+            self::$logHandler->debug("Bad request: XMLHttpRequest header missing");
             new APIError(400);
         }
 
@@ -79,11 +88,13 @@ class APIAccess
                     new APIError(400);
                 }
             } elseif (strtolower($contentType) !== 'application/json' || strtolower($charset) !== 'charset=utf-8') {
+                self::$logHandler->debug("Bad request: wrong content type");
                 new APIError(400);
             }
         }
 
         if (!isset($_GET['q'])) {
+            self::$logHandler->debug("Bad request: no query parameter");
             new APIError(400);
         }
 
@@ -101,6 +112,7 @@ class APIAccess
 
         $fingerprint = $_COOKIE['violetFP'] ?? null;
         if (!$fingerprint) {
+            self::$logHandler->debug("Request rejected: fingerprint cookie missing");
             new APIError(401);
         }
 
@@ -118,18 +130,25 @@ class APIAccess
 
         $accessToken = self::getBearerToken();
         if (!$accessToken || !self::$JWT->verifyAccessToken($accessToken)) {
+            if (!$accessToken) {
+                self::$logHandler->debug("Request rejected: access token missing");
+            } else {
+                self::$logHandler->debug("Request rejected: could not verify access token");
+            }
             self::revokeCookie();
             new APIError(401);
         }
 
         $payload = self::$JWT->getPayload($accessToken);
         if (!$payload || !isset($payload->jti) || !isset($payload->sub)) {
+            self::$logHandler->debug("Request rejected: could not get token payload");
             self::revokeCookie();
             new APIError(401);
         }
 
         $hash = hash('sha256', $fingerprint);
         if (!hash_equals($hash, $payload->jti)) {
+            self::$logHandler->debug("Request rejected: hash mismatch");
             self::revokeCookie();
             new APIError(401);
         }
@@ -216,12 +235,10 @@ class APIAccess
         $deviceCookie = $_COOKIE['violetID'] ?? null;
         $isTrustedClient = $deviceCookie && self::$JWT->verifyAccessToken($deviceCookie);
 
-        $logHandler = new Log(self::$violet);
-
         // trusted client -> check if device cookie is locked
         if ($isTrustedClient) {
             // failed attempts within the last $lockTime for this cookie
-            $failedLogins = $logHandler->getFailedLogins(null, $deviceCookie, time()-$lockTime, $maxAttempts);
+            $failedLogins = self::$logHandler->getFailedLogins(null, $deviceCookie, time()-$lockTime, $maxAttempts);
             if ($failedLogins >= $maxAttempts) {
                 new APIError(200, '');
             }
@@ -231,7 +248,7 @@ class APIAccess
         if (!$isTrustedClient) {
             $deviceCookie = null;
             // failed attempts within the last $lockTime for this user ($email)
-            $failedLogins = $logHandler->getFailedLogins($email, null, time()-$lockTime, $maxAttempts);
+            $failedLogins = self::$logHandler->getFailedLogins($email, null, time()-$lockTime, $maxAttempts);
             if ($failedLogins >= $maxAttempts) {
                 new APIError(200, '');
             }
@@ -280,7 +297,7 @@ class APIAccess
         /* register failed login attempt */
 
         if ($authenticated === false) {
-            $logHandler->login($email, $deviceCookie);
+            self::$logHandler->login($email, $deviceCookie);
             new APIError(200, '');
         }
 
@@ -408,6 +425,7 @@ class APIAccess
     {
         $host = Utils::getHost(self::$violet->config['Routes']['Domain']);
         if (!$host) {
+            self::$logHandler->debug("Could not set cookie: no host found");
             return;
         }
 
@@ -426,6 +444,7 @@ class APIAccess
     {
         $host = Utils::getHost(self::$violet->config['Routes']['Domain']);
         if (!$host) {
+            self::$logHandler->debug("Could not set cookie: no host found");
             return;
         }
 
