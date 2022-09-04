@@ -8,6 +8,12 @@
 
 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 
+
+# https://stackoverflow.com/a/33254772
+
+CGIPassAuth on
+
+
 # ----------------------------------------------------------------------
 # | Block access to all files except 'api.php' and 'download.php'      |
 # ----------------------------------------------------------------------

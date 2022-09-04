@@ -162,18 +162,27 @@ class APIAccess
 
     private static function getAuthorizationHeader()
     {
-        $headers = null;
+        // 2022-09-04: Added 'REDIRECT_HTTP_AUTHORIZATION'
+        // https://stackoverflow.com/a/71643190
+
+        $bearerToken = null;
+
         if (isset($_SERVER['Authorization'])) {
-            $headers = trim($_SERVER['Authorization']);
+            $bearerToken = trim($_SERVER['Authorization']);
+
         } elseif (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-            $headers = trim($_SERVER['HTTP_AUTHORIZATION']);
+            $bearerToken = trim($_SERVER['HTTP_AUTHORIZATION']);
+
+        } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+            $bearerToken = trim($_SERVER['REDIRECT_HTTP_AUTHORIZATION']);
+
         } elseif (function_exists('apache_request_headers')) {
             $requestHeaders = apache_request_headers();
             if (isset($requestHeaders['Authorization'])) {
-                $headers = trim($requestHeaders['Authorization']);
+                $bearerToken = trim($requestHeaders['Authorization']);
             }
         }
-        return $headers;
+        return $bearerToken;
     }
 
     private static function handleLogin()
