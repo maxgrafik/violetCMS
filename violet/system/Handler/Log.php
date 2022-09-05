@@ -117,7 +117,7 @@ class Log
 
         $timestamp = date("Y-m-d H:i:s");
 
-        $logEntry = $timestamp . "\n";
+        $logEntry = $timestamp . ": ";
 
         if (is_array($msg) || is_object($msg)) {
             $logEntry .= print_r($msg, true);
@@ -125,7 +125,7 @@ class Log
             $logEntry .= $msg;
         }
 
-        $logEntry .= "\n\n";
+        $logEntry .= "\n";
 
         file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
     }
