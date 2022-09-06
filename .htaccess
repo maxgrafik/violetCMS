@@ -460,6 +460,7 @@ AddDefaultCharset utf-8
 # </IfModule>
 
 <IfModule mod_headers.c>
+    Header unset X-Frame-Options
     Header always set X-Frame-Options "SAMEORIGIN"
 </IfModule>
 
