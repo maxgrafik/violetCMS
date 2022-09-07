@@ -271,8 +271,8 @@ ol {
     list-style: decimal inside;
 }
 
-li > ul,
-li > ol {
+main .content li > ul,
+main .content li > ol {
     margin-left: 1.25rem !important;
     padding-bottom: 0 !important;
 }
@@ -625,7 +625,7 @@ div.footnotes {
         transition: .3s;
     }
     nav ul li:hover > ul {
-        /* display: inherit; */
+        display: inherit;
     }
     nav ul ul li {
         margin-left: 0;
