@@ -71,7 +71,7 @@ class Log
         $overallAttempts = 0;
 
         if (false !== ($handle = fopen($logFile, 'r'))) {
-            while (false !== ($data = fgetcsv($handle))) {
+            while (false !== ($data = fgetcsv($handle, 0, ",", "\"", "\\"))) {
 
                 // looking for cookie lock
                 if ($deviceCookie) {

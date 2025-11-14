@@ -11,10 +11,10 @@
 # For the full license information, view the LICENSE file that was distributed
 # with this source code.
 #
-#
-# 2022 violetCMS
-# changed footnote style (lines: 384, 388, 543, 590)
-#
+# violetCMS
+# - Changed footnote style (lines 384, 388, 543, 548, 590)
+# - Used namespace instead of "self" in callable (line 520)
+# - Handle "x=y" attributes (line 621/622, 702)
 
 namespace Vendor\Parsedown;
 
@@ -338,7 +338,7 @@ class ParsedownExtra extends Parsedown
     #
     # Setext
 
-    protected function blockSetextHeader($Line, array $Block = null)
+    protected function blockSetextHeader($Line, ?array $Block = null)
     {
         $Block = parent::blockSetextHeader($Line, $Block);
 
@@ -517,7 +517,7 @@ class ParsedownExtra extends Parsedown
             ),
         );
 
-        uasort($this->DefinitionData['Footnote'], 'self::sortFootnotes');
+        uasort($this->DefinitionData['Footnote'], '\Vendor\Parsedown\ParsedownExtra::sortFootnotes');
 
         foreach ($this->DefinitionData['Footnote'] as $definitionId => $DefinitionData)
         {
@@ -545,7 +545,7 @@ class ParsedownExtra extends Parsedown
                         'rev' => 'footnote',
                         'class' => 'footnote-backref',
                     ),
-                    //'rawHtml' => '&#x21A9;',
+                    //'rawHtml' => '&#8617;',
                     'rawHtml' => '&uarr;',
                     'allowRawHtmlInSafeMode' => true,
                     'autobreak' => false,

@@ -114,8 +114,8 @@ class Utils
 
     public static function canonicalize($string)
     {
-        $string = preg_replace_callback('/&#x([0-9a-fA-F]+);?/i', ['self', 'chr_utf8_callback_hex'], $string);
-        $string = preg_replace_callback('/&#([0-9]+);?/', ['self', 'chr_utf8_callback_dec'], $string);
+        $string = preg_replace_callback('/&#x([0-9a-fA-F]+);?/i', "\VioletCMS\Utils::chr_utf8_callback_hex", $string);
+        $string = preg_replace_callback('/&#([0-9]+);?/', "\VioletCMS\Utils::chr_utf8_callback_dec", $string);
         $string = html_entity_decode($string, ENT_QUOTES, 'utf-8');
         $string = str_ireplace('&apos;', "'", $string);
 
